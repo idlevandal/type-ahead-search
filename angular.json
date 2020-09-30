@@ -145,6 +145,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "search-app"
+    }
+  },
+  "defaultProject": "search-app",
+  "cli": {
+    "analytics": false
+  }
 }
