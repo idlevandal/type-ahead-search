@@ -10,6 +10,11 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
+
+  // searchField$ = new Subject<string>();
+  // in the HTML
+  // <input type="text" placeholder="search" (keyup)="searchField$.next($event.target.value)" name="search">
+  
   @ViewChild('searchInput') input: ElementRef;
 
   public users: any;
