@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 // @ts-check
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,8 @@ import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/op
 export class AppComponent implements AfterViewInit {
   @ViewChild('searchInput') input: ElementRef;
 
-  public user: any;
+  public users: any;
+  private readonly ACCESS_KEY = 'unsplash key goes here 😁';
 
   constructor(private http: HttpClient) {}
 
@@ -22,9 +23,13 @@ export class AppComponent implements AfterViewInit {
         map(ev => ev.target.value),
         debounceTime(400),
         distinctUntilChanged(),
-        switchMap((user) => this.http.get(`https://jsonplaceholder.typicode.com/users/${user}`)),
-      ).subscribe(user => {
-        this.user = user;
+        filter(val => val.length > 1),
+        tap(() => this.users = []),
+        // switchMap((user) => this.http.get(`https://jsonplaceholder.typicode.com/users/${user}`)),
+        switchMap((user) => this.http.get(`https://api.unsplash.com/search/users?client_id=${this.ACCESS_KEY}&page=1&query=${user}`)),
+      ).subscribe(res => {
+        this.users = res['results'];
+        
       });
   }
 }

@@ -1,6 +1,7 @@
 <input #searchInput type="text">
-<div *ngIf="user">
-  <p>{{user.id}}</p>
-  <pre>{{user | json}}</pre>
+<div *ngIf="users">
+  <div *ngFor="let user of users">
+    <p>{{user.name}}</p>
+  </div>
 </div>
 <router-outlet></router-outlet>
