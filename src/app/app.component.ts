@@ -21,7 +21,7 @@ export class AppComponent implements AfterViewInit {
     fromEvent<any>(this.input.nativeElement, 'keyup')
       .pipe(
         map(ev => ev.target.value),
-        debounceTime(400),
+        debounceTime(275),
         distinctUntilChanged(),
         filter(val => val.length > 1),
         tap(() => this.users = []),
